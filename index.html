@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>未来逐绿·辽疆清穹 - 2026寒假社会实践</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .hero-bg {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('./assets/images/banner.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        .section-padding {
+            padding-top: 5rem;
+            padding-bottom: 5rem;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#10B981', // Emerald 500
+                        secondary: '#3B82F6', // Blue 500
+                        dark: '#1F2937', // Gray 800
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md shadow-sm transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0 flex items-center">
+                    <img class="h-10 w-10 rounded-full mr-3" src="./assets/images/logo.png" alt="Logo">
+                    <span class="font-bold text-xl text-primary tracking-tight">未来逐绿·辽疆清穹</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#home" class="hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">首页</a>
+                        <a href="#about" class="hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">团队介绍</a>
+                        <a href="#achievements" class="hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">实践成果</a>
+                        <a href="#videos" class="hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">视频中心</a>
+                        <a href="#contact" class="bg-primary text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-green-600 transition-colors shadow-md">关注我们要</a>
+                    </div>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="-mr-2 flex md:hidden">
+                    <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary" aria-controls="mobile-menu" aria-expanded="false" id="mobile-menu-btn">
+                        <span class="sr-only">Open main menu</span>
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile menu, show/hide based on menu state. -->
+        <div class="hidden md:hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white shadow-lg">
+                <a href="#home" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-50 hover:text-primary">首页</a>
+                <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-50 hover:text-primary">团队介绍</a>
+                <a href="#achievements" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-50 hover:text-primary">实践成果</a>
+                <a href="#videos" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-50 hover:text-primary">视频中心</a>
+                <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium text-primary font-bold">关注我们</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-bg h-screen flex items-center justify-center text-center text-white px-4">
+        <div class="max-w-4xl mx-auto animate-fade-in-up">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight drop-shadow-lg">
+                溯源本溪绿色转型之路
+            </h1>
+            <p class="text-xl md:text-2xl mb-10 text-gray-100 drop-shadow-md font-light">
+                践行绿色低碳理念 · 共建美丽中国家园
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#about" class="px-8 py-3 bg-primary hover:bg-green-600 text-white font-semibold rounded-full transition-all shadow-lg transform hover:scale-105">
+                    了解我们的故事
+                </a>
+                <a href="#achievements" class="px-8 py-3 bg-white/20 hover:bg-white/30 backdrop-blur-sm border border-white/50 text-white font-semibold rounded-full transition-all shadow-lg">
+                    查看最新动态
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section-padding bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl relative inline-block pb-2 after:content-[''] after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-20 after:h-1 after:bg-primary after:rounded-full">
+                    关于我们
+                </h2>
+                <p class="mt-4 text-lg text-gray-500 max-w-2xl mx-auto">
+                    我们是一群致力于探索工业城市绿色转型的青年学子，深入辽宁本溪，记录从“雾霾之都”到“生态典范”的蜕变。
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-20">
+                <div class="rounded-2xl overflow-hidden shadow-2xl transform rotate-1 hover:rotate-0 transition-all duration-500">
+                    <img src="./assets/images/banner.png" alt="Team Activity" class="w-full h-full object-cover">
+                </div>
+                <div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4">项目背景</h3>
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        本溪市作为重要重工业基地，曾面临严峻的环境挑战。近十年来，依托生态文明建设战略，本溪实现了空气质量的质的飞跃。我们的团队深入一线，调研本溪市环保局、重点企业及社区，探寻这一转型背后的“绿色密码”，为同类资源型城市提供借鉴。
+                    </p>
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="p-4 bg-green-50 rounded-xl border-l-4 border-primary">
+                            <div class="text-3xl font-bold text-primary mb-1">10+</div>
+                            <div class="text-sm text-gray-600">调研点位</div>
+                        </div>
+                        <div class="p-4 bg-blue-50 rounded-xl border-l-4 border-secondary">
+                            <div class="text-3xl font-bold text-secondary mb-1">5+</div>
+                            <div class="text-sm text-gray-600">产出成果</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Team Members -->
+            <div class="mt-16">
+                <h3 class="text-2xl font-bold text-center text-gray-800 mb-10">团队成员</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Leader -->
+                    <div class="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow border border-gray-100 text-center group">
+                        <div class="w-20 h-20 bg-primary/10 rounded-full mx-auto flex items-center justify-center text-primary text-2xl font-bold mb-4 group-hover:bg-primary group-hover:text-white transition-colors">
+                            张
+                        </div>
+                        <h4 class="text-xl font-bold text-gray-900">张予宁</h4>
+                        <p class="text-sm text-primary font-medium mb-2">队长 · 统筹协调</p>
+                        <p class="text-gray-500 text-sm">未来技术学院 | 整体统筹、联络协调、撰写报告</p>
+                    </div>
+
+                    <!-- Member 1 -->
+                    <div class="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow border border-gray-100 text-center group">
+                        <div class="w-20 h-20 bg-secondary/10 rounded-full mx-auto flex items-center justify-center text-secondary text-2xl font-bold mb-4 group-hover:bg-secondary group-hover:text-white transition-colors">
+                            石
+                        </div>
+                        <h4 class="text-xl font-bold text-gray-900">石佳宁</h4>
+                        <p class="text-sm text-secondary font-medium mb-2">队员 · 线下调研</p>
+                        <p class="text-gray-500 text-sm">吴健雄学院 | 访谈记录、实地考察</p>
+                    </div>
+
+                    <!-- Member 2 -->
+                    <div class="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow border border-gray-100 text-center group">
+                        <div class="w-20 h-20 bg-secondary/10 rounded-full mx-auto flex items-center justify-center text-secondary text-2xl font-bold mb-4 group-hover:bg-secondary group-hover:text-white transition-colors">
+                            柳
+                        </div>
+                        <h4 class="text-xl font-bold text-gray-900">柳沛东</h4>
+                        <p class="text-sm text-secondary font-medium mb-2">队员 · 资料汇总</p>
+                        <p class="text-gray-500 text-sm">信息学院 | 线下调研、数据整理</p>
+                    </div>
+
+                    <!-- Member 3 -->
+                    <div class="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow border border-gray-100 text-center group">
+                        <div class="w-20 h-20 bg-secondary/10 rounded-full mx-auto flex items-center justify-center text-secondary text-2xl font-bold mb-4 group-hover:bg-secondary group-hover:text-white transition-colors">
+                            张
+                        </div>
+                        <h4 class="text-xl font-bold text-gray-900">张天承</h4>
+                        <p class="text-sm text-secondary font-medium mb-2">队员 · 影像拍摄</p>
+                        <p class="text-gray-500 text-sm">集成电路学院 | 素材收集、影像记录</p>
+                    </div>
+
+                    <!-- Member 4 -->
+                    <div class="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow border border-gray-100 text-center group">
+                        <div class="w-20 h-20 bg-secondary/10 rounded-full mx-auto flex items-center justify-center text-secondary text-2xl font-bold mb-4 group-hover:bg-secondary group-hover:text-white transition-colors">
+                            赵
+                        </div>
+                        <h4 class="text-xl font-bold text-gray-900">赵嘉瑞</h4>
+                        <p class="text-sm text-secondary font-medium mb-2">队员 · 宣传推送</p>
+                        <p class="text-gray-500 text-sm">未来技术学院 | 后期宣传、公众号运营</p>
+                    </div>
+
+                    <!-- Member 5 -->
+                    <div class="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow border border-gray-100 text-center group">
+                        <div class="w-20 h-20 bg-secondary/10 rounded-full mx-auto flex items-center justify-center text-secondary text-2xl font-bold mb-4 group-hover:bg-secondary group-hover:text-white transition-colors">
+                            刘
+                        </div>
+                        <h4 class="text-xl font-bold text-gray-900">刘夏君</h4>
+                        <p class="text-sm text-secondary font-medium mb-2">队员 · 微课制作</p>
+                        <p class="text-gray-500 text-sm">吴健雄学院 | 环保微课开发与发布</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievements Section -->
+    <section id="achievements" class="section-padding bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl relative inline-block pb-2 after:content-[''] after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-20 after:h-1 after:bg-primary after:rounded-full">
+                    实践成果
+                </h2>
+                <p class="mt-4 text-lg text-gray-500">
+                    我们会在这里同步微信公众号的最新推送，记录每一个精彩瞬间。
+                </p>
+            </div>
+
+            <!-- Blog Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Article Placeholder 1 -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer group">
+                    <div class="h-48 bg-gray-200 relative overflow-hidden">
+                        <!-- Placeholder Image -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center text-gray-400 group-hover:scale-110 transition-transform duration-500">
+                            <i class="fas fa-image text-4xl"></i>
+                        </div>
+                        <div class="absolute top-4 right-4 bg-primary text-white text-xs px-2 py-1 rounded">最新</div>
+                    </div>
+                    <div class="p-6">
+                        <div class="text-sm text-gray-500 mb-2"><i class="far fa-calendar-alt mr-1"></i> 2026-02-10</div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-primary transition-colors">实践启程：我们出发啦！</h3>
+                        <p class="text-gray-600 line-clamp-3">
+                            今天，我们的团队正式集结，前往辽宁本溪。带着对环保的热忱，我们踏上了这段溯源绿色转型之路的旅程...
+                        </p>
+                        <div class="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
+                            <span class="text-primary font-medium text-sm">阅读更多</span>
+                            <i class="fas fa-arrow-right text-primary text-sm group-hover:translate-x-1 transition-transform"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Article Placeholder 2 -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer group">
+                    <div class="h-48 bg-gray-200 relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center text-gray-400 group-hover:scale-110 transition-transform duration-500">
+                            <i class="fas fa-industry text-4xl"></i>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="text-sm text-gray-500 mb-2"><i class="far fa-calendar-alt mr-1"></i> 2026-02-12</div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-primary transition-colors">走进本溪环保局：探秘数据背后的故事</h3>
+                        <p class="text-gray-600 line-clamp-3">
+                            深入环保局内部，与一线工作人员面对面交流。那些空气质量监测数据背后，是无数环保人的日夜坚守...
+                        </p>
+                        <div class="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
+                            <span class="text-primary font-medium text-sm">阅读更多</span>
+                            <i class="fas fa-arrow-right text-primary text-sm group-hover:translate-x-1 transition-transform"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Article Placeholder 3 -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer group">
+                    <div class="h-48 bg-gray-200 relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-br from-green-100 to-yellow-100 flex items-center justify-center text-gray-400 group-hover:scale-110 transition-transform duration-500">
+                            <i class="fas fa-leaf text-4xl"></i>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="text-sm text-gray-500 mb-2"><i class="far fa-calendar-alt mr-1"></i> 2026-02-15</div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-primary transition-colors">街头访谈：听听市民怎么说</h3>
+                        <p class="text-gray-600 line-clamp-3">
+                            走上街头，随机采访了本溪市民。对于这几年的环境变化，大家都有着切身的体会和感悟...
+                        </p>
+                        <div class="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
+                            <span class="text-primary font-medium text-sm">阅读更多</span>
+                            <i class="fas fa-arrow-right text-primary text-sm group-hover:translate-x-1 transition-transform"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-10">
+                <a href="#" class="inline-flex items-center px-6 py-3 border border-gray-300 shadow-sm text-base font-medium rounded-full text-gray-700 bg-white hover:bg-gray-50 transition-colors">
+                    <i class="fab fa-weixin mr-2 text-green-600"></i>
+                    查看更多往期推送
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Section -->
+    <section id="videos" class="section-padding bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl relative inline-block pb-2 after:content-[''] after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-20 after:h-1 after:bg-primary after:rounded-full">
+                    视频中心
+                </h2>
+                <p class="mt-4 text-lg text-gray-500">
+                    环保微课与宣传片展播
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                <!-- Promo Video -->
+                <div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                        <span class="w-2 h-8 bg-primary rounded-full mr-3"></span>
+                        团队宣传片
+                    </h3>
+                    <div class="aspect-w-16 aspect-h-9 bg-gray-900 rounded-2xl overflow-hidden shadow-xl flex items-center justify-center relative group">
+                        <!-- Placeholder for Video -->
+                        <div class="text-center p-10">
+                            <i class="fas fa-play-circle text-6xl text-white/80 group-hover:text-white transition-colors cursor-pointer transform group-hover:scale-110 duration-300"></i>
+                            <p class="text-gray-400 mt-4">视频正在制作中...</p>
+                        </div>
+                        <!-- Use standard HTML5 video tag when file is ready:
+                        <video controls poster="path/to/poster.jpg" class="w-full h-full object-cover">
+                            <source src="path/to/video.mp4" type="video/mp4">
+                        </video> 
+                        -->
+                    </div>
+                </div>
+
+                <!-- Micro Course -->
+                <div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                        <span class="w-2 h-8 bg-secondary rounded-full mr-3"></span>
+                        环保微课堂
+                    </h3>
+                    <div class="space-y-4">
+                        <!-- Video Item 1 -->
+                        <div class="bg-gray-50 rounded-xl p-4 flex gap-4 hover:bg-gray-100 transition-colors cursor-pointer group">
+                            <div class="w-32 h-20 bg-gray-300 rounded-lg flex-shrink-0 relative overflow-hidden">
+                                <div class="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/10 transition-colors">
+                                    <i class="fas fa-play text-white"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-800 group-hover:text-primary transition-colors">第一课：什么是碳中和？</h4>
+                                <p class="text-sm text-gray-500 mt-1">深入浅出讲解碳达峰与碳中和的基本概念。</p>
+                                <span class="text-xs text-gray-400 mt-2 block">即将上线</span>
+                            </div>
+                        </div>
+
+                        <!-- Video Item 2 -->
+                        <div class="bg-gray-50 rounded-xl p-4 flex gap-4 hover:bg-gray-100 transition-colors cursor-pointer group">
+                            <div class="w-32 h-20 bg-gray-300 rounded-lg flex-shrink-0 relative overflow-hidden">
+                                <div class="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/10 transition-colors">
+                                    <i class="fas fa-play text-white"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-800 group-hover:text-primary transition-colors">第二课：本溪的绿色转型</h4>
+                                <p class="text-sm text-gray-500 mt-1">结合实地调研，讲述工业城市的蜕变。</p>
+                                <span class="text-xs text-gray-400 mt-2 block">即将上线</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Upload Area Placeholder (Simulated) -->
+            <div class="mt-12 bg-gray-50 border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-primary transition-colors">
+                <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-4"></i>
+                <h4 class="text-lg font-medium text-gray-700">视频上传通道</h4>
+                <p class="text-gray-500 mb-4">仅限管理员使用，上传新视频素材</p>
+                <button class="px-6 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium hover:bg-gray-50 shadow-sm text-gray-700">
+                    选择文件
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer / Contact -->
+    <footer id="contact" class="bg-dark text-white pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+                <!-- Brand -->
+                <div>
+                    <div class="flex items-center mb-4">
+                        <img class="h-10 w-10 rounded-full mr-3" src="./assets/images/logo.png" alt="Logo">
+                        <span class="font-bold text-xl tracking-tight">未来逐绿·辽疆清穹</span>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        我们致力于通过社会实践，传播绿色理念，记录时代变迁。欢迎关注我们的社交媒体账号，获取更多一手资讯。
+                    </p>
+                </div>
+
+                <!-- Links -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4">快速导航</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#home" class="hover:text-primary transition-colors">首页</a></li>
+                        <li><a href="#about" class="hover:text-primary transition-colors">团队介绍</a></li>
+                        <li><a href="#achievements" class="hover:text-primary transition-colors">实践成果</a></li>
+                        <li><a href="#videos" class="hover:text-primary transition-colors">视频中心</a></li>
+                    </ul>
+                </div>
+
+                <!-- Socials -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4">关注我们</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center hover:bg-[#ff7eb3] hover:text-white transition-colors" title="小红书">
+                            <i class="fas fa-book"></i> <!-- Using book icon for Xiaohongshu as placeholder -->
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center hover:bg-[#00c8fd] hover:text-white transition-colors" title="Bilibili">
+                            <i class="fab fa-bilibili"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center hover:bg-[#07c160] hover:text-white transition-colors" title="微信公众号">
+                            <i class="fab fa-weixin"></i>
+                        </a>
+                    </div>
+                    <div class="mt-6">
+                        <p class="text-gray-500 text-sm">联系邮箱: 3352113741@qq.com</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 pt-8 text-center text-gray-500 text-sm">
+                <p>&copy; 2026 寒假社会实践团队 版权所有</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Menu Script -->
+    <script>
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Smooth scroll adjustment for fixed navbar
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                menu.classList.add('hidden'); // Close mobile menu on click
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Navbar transparency on scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-md');
+                navbar.classList.replace('bg-white/90', 'bg-white');
+            } else {
+                navbar.classList.remove('shadow-md');
+                navbar.classList.replace('bg-white', 'bg-white/90');
+            }
+        });
+    </script>
+</body>
+</html>
