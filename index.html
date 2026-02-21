@@ -217,8 +217,8 @@
 
             <!-- Blog Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Article Placeholder 1 -->
-                <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer group">
+                <!-- Article 1 -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer group" onclick="window.open('https://mp.weixin.qq.com/s/IumbASScZbfdtW0veUXCyw', '_blank')">
                     <div class="h-48 bg-gray-200 relative overflow-hidden">
                         <!-- Placeholder Image -->
                         <div class="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center text-gray-400 group-hover:scale-110 transition-transform duration-500">
@@ -228,9 +228,9 @@
                     </div>
                     <div class="p-6">
                         <div class="text-sm text-gray-500 mb-2"><i class="far fa-calendar-alt mr-1"></i> 2026-02-10</div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-primary transition-colors">实践启程：我们出发啦！</h3>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-primary transition-colors">为了读懂本溪的“呼吸”，这群大学生真的走近了一次</h3>
                         <p class="text-gray-600 line-clamp-3">
-                            今天，我们的团队正式集结，前往辽宁本溪。带着对环保的热忱，我们踏上了这段溯源绿色转型之路的旅程...
+                            早在寒假正式开始前的 1 月初 ，当期末考试的硝烟还未散去，我们的“长征”其实就已经悄然开始了...
                         </p>
                         <div class="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
                             <span class="text-primary font-medium text-sm">阅读更多</span>
@@ -308,17 +308,12 @@
                         <span class="w-2 h-8 bg-primary rounded-full mr-3"></span>
                         团队宣传片
                     </h3>
-                    <div class="aspect-w-16 aspect-h-9 bg-gray-900 rounded-2xl overflow-hidden shadow-xl flex items-center justify-center relative group">
+                    <div class="aspect-video bg-gray-900 rounded-2xl overflow-hidden shadow-xl flex items-center justify-center relative group">
                         <!-- Placeholder for Video -->
                         <div class="text-center p-10">
                             <i class="fas fa-play-circle text-6xl text-white/80 group-hover:text-white transition-colors cursor-pointer transform group-hover:scale-110 duration-300"></i>
                             <p class="text-gray-400 mt-4">视频正在制作中...</p>
                         </div>
-                        <!-- Use standard HTML5 video tag when file is ready:
-                        <video controls poster="path/to/poster.jpg" class="w-full h-full object-cover">
-                            <source src="path/to/video.mp4" type="video/mp4">
-                        </video> 
-                        -->
                     </div>
                 </div>
 
@@ -330,16 +325,21 @@
                     </h3>
                     <div class="space-y-4">
                         <!-- Video Item 1 -->
-                        <div class="bg-gray-50 rounded-xl p-4 flex gap-4 hover:bg-gray-100 transition-colors cursor-pointer group">
+                        <div class="bg-gray-50 rounded-xl p-4 flex gap-4 hover:bg-gray-100 transition-colors cursor-pointer group" onclick="window.open('https://b23.tv/HNuVQO6', '_blank')">
                             <div class="w-32 h-20 bg-gray-300 rounded-lg flex-shrink-0 relative overflow-hidden">
                                 <div class="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/10 transition-colors">
                                     <i class="fas fa-play text-white"></i>
                                 </div>
                             </div>
-                            <div>
-                                <h4 class="font-bold text-gray-800 group-hover:text-primary transition-colors">第一课：什么是碳中和？</h4>
-                                <p class="text-sm text-gray-500 mt-1">深入浅出讲解碳达峰与碳中和的基本概念。</p>
-                                <span class="text-xs text-gray-400 mt-2 block">即将上线</span>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-gray-800 group-hover:text-primary transition-colors">第一课：看不见的战争，揭秘PM2.5与臭氧</h4>
+                                <p class="text-sm text-gray-500 mt-1">主讲人：张予宁 | 揭秘空气中的隐形杀手</p>
+                                <div class="flex items-center justify-between mt-2">
+                                    <span class="text-xs text-green-500"><i class="fas fa-check-circle mr-1"></i>已上线</span>
+                                    <a href="./courseware/lesson1_pm25.html" target="_blank" class="text-xs bg-secondary text-white px-2 py-1 rounded hover:bg-blue-600 transition-colors" onclick="event.stopPropagation()">
+                                        <i class="fas fa-file-powerpoint mr-1"></i>查看课件
+                                    </a>
+                                </div>
                             </div>
                         </div>
 
@@ -347,13 +347,75 @@
                         <div class="bg-gray-50 rounded-xl p-4 flex gap-4 hover:bg-gray-100 transition-colors cursor-pointer group">
                             <div class="w-32 h-20 bg-gray-300 rounded-lg flex-shrink-0 relative overflow-hidden">
                                 <div class="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/10 transition-colors">
-                                    <i class="fas fa-play text-white"></i>
+                                    <i class="fas fa-clock text-white"></i>
                                 </div>
                             </div>
-                            <div>
-                                <h4 class="font-bold text-gray-800 group-hover:text-primary transition-colors">第二课：本溪的绿色转型</h4>
-                                <p class="text-sm text-gray-500 mt-1">结合实地调研，讲述工业城市的蜕变。</p>
-                                <span class="text-xs text-gray-400 mt-2 block">即将上线</span>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-gray-800 group-hover:text-primary transition-colors">第二课：钢铁是怎样“炼”绿的？</h4>
+                                <p class="text-sm text-gray-500 mt-1">主讲人：石佳宁 | 工业烟气净化之旅</p>
+                                <div class="flex items-center justify-between mt-2">
+                                    <span class="text-xs text-gray-400">即将上线</span>
+                                    <a href="./courseware/lesson2_industry.html" target="_blank" class="text-xs bg-secondary text-white px-2 py-1 rounded hover:bg-blue-600 transition-colors" onclick="event.stopPropagation()">
+                                        <i class="fas fa-file-powerpoint mr-1"></i>查看课件
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Video Item 3 -->
+                        <div class="bg-gray-50 rounded-xl p-4 flex gap-4 hover:bg-gray-100 transition-colors cursor-pointer group">
+                            <div class="w-32 h-20 bg-gray-300 rounded-lg flex-shrink-0 relative overflow-hidden">
+                                <div class="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/10 transition-colors">
+                                    <i class="fas fa-clock text-white"></i>
+                                </div>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-gray-800 group-hover:text-primary transition-colors">第三课：温暖不“黑”天</h4>
+                                <p class="text-sm text-gray-500 mt-1">主讲人：柳沛东 | 北方供暖的清洁进化论</p>
+                                <div class="flex items-center justify-between mt-2">
+                                    <span class="text-xs text-gray-400">即将上线</span>
+                                    <a href="./courseware/lesson3_heating.html" target="_blank" class="text-xs bg-secondary text-white px-2 py-1 rounded hover:bg-blue-600 transition-colors" onclick="event.stopPropagation()">
+                                        <i class="fas fa-file-powerpoint mr-1"></i>查看课件
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Video Item 4 -->
+                        <div class="bg-gray-50 rounded-xl p-4 flex gap-4 hover:bg-gray-100 transition-colors cursor-pointer group">
+                            <div class="w-32 h-20 bg-gray-300 rounded-lg flex-shrink-0 relative overflow-hidden">
+                                <div class="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/10 transition-colors">
+                                    <i class="fas fa-clock text-white"></i>
+                                </div>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-gray-800 group-hover:text-primary transition-colors">第四课：谁在监视天空？</h4>
+                                <p class="text-sm text-gray-500 mt-1">主讲人：刘夏君 | 智慧环保与监测黑科技</p>
+                                <div class="flex items-center justify-between mt-2">
+                                    <span class="text-xs text-gray-400">即将上线</span>
+                                    <a href="./courseware/lesson4_monitor.html" target="_blank" class="text-xs bg-secondary text-white px-2 py-1 rounded hover:bg-blue-600 transition-colors" onclick="event.stopPropagation()">
+                                        <i class="fas fa-file-powerpoint mr-1"></i>查看课件
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Video Item 5 -->
+                        <div class="bg-gray-50 rounded-xl p-4 flex gap-4 hover:bg-gray-100 transition-colors cursor-pointer group">
+                            <div class="w-32 h-20 bg-gray-300 rounded-lg flex-shrink-0 relative overflow-hidden">
+                                <div class="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/10 transition-colors">
+                                    <i class="fas fa-clock text-white"></i>
+                                </div>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-gray-800 group-hover:text-primary transition-colors">第五课：低碳生活实操手册</h4>
+                                <p class="text-sm text-gray-500 mt-1">主讲人：张予宁 | 普通人的蓝天贡献</p>
+                                <div class="flex items-center justify-between mt-2">
+                                    <span class="text-xs text-gray-400">即将上线</span>
+                                    <a href="./courseware/lesson5_lifestyle.html" target="_blank" class="text-xs bg-secondary text-white px-2 py-1 rounded hover:bg-blue-600 transition-colors" onclick="event.stopPropagation()">
+                                        <i class="fas fa-file-powerpoint mr-1"></i>查看课件
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -402,13 +464,13 @@
                 <div>
                     <h4 class="text-lg font-bold mb-4">关注我们</h4>
                     <div class="flex space-x-4">
-                        <a href="#" class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center hover:bg-[#ff7eb3] hover:text-white transition-colors" title="小红书">
+                        <a href="https://xhslink.com/m/6oU0ATLtCk2" target="_blank" class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center hover:bg-[#ff7eb3] hover:text-white transition-colors" title="小红书">
                             <i class="fas fa-book"></i> <!-- Using book icon for Xiaohongshu as placeholder -->
                         </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center hover:bg-[#00c8fd] hover:text-white transition-colors" title="Bilibili">
+                        <a href="https://b23.tv/3vt0Wvq" target="_blank" class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center hover:bg-[#00c8fd] hover:text-white transition-colors" title="Bilibili">
                             <i class="fab fa-bilibili"></i>
                         </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center hover:bg-[#07c160] hover:text-white transition-colors" title="微信公众号">
+                        <a href="javascript:void(0)" onclick="alert('请搜索微信公众号：辽筑清穹实践团 (gh_8cf75992e144)')" class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center hover:bg-[#07c160] hover:text-white transition-colors" title="微信公众号">
                             <i class="fab fa-weixin"></i>
                         </a>
                     </div>

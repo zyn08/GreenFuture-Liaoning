@@ -1,0 +1,654 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第五课：低碳生活实操手册 - 普通人的蓝天贡献</title>
+    
+    <!-- Reveal.js CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/theme/black.css" id="theme">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- ECharts -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+
+    <!-- Custom CSS -->
+    <style>
+        .reveal .slides section {
+            text-align: left;
+            font-size: 34px;
+            font-weight: normal;
+        }
+        .reveal p, .reveal li {
+            font-size: 1em;
+            line-height: 1.6;
+        }
+        .reveal ul ul, .reveal ol ol {
+            font-size: 1em;
+        }
+        .reveal h1 { font-size: 2.6em; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+        .reveal h2 { font-size: 2.0em; }
+        .reveal h3 { font-size: 1.5em; }
+        .reveal h1, .reveal h2, .reveal h3 {
+            text-transform: none;
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+        .text-card-title { font-size: 30px !important; }
+        .text-card-body { font-size: 24px !important; }
+        
+        /* Carbon Calculator Styles (Dark Mode) */
+        #carbon-calculator {
+            position: relative;
+            width: 900px;
+            height: 550px;
+            margin: 0 auto;
+            background: #1a202c; /* Dark bg */
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            overflow: hidden;
+            display: flex;
+            border: 1px solid #4a5568;
+            margin-bottom: 50px; /* Push bottom border up slightly by adding margin */
+        }
+        
+        .calc-sidebar {
+            width: 350px;
+            background: #2d3748; /* Sidebar dark */
+            padding: 20px; /* Reduced padding */
+            overflow-y: auto;
+            border-right: 1px solid #4a5568;
+        }
+
+        .calc-main {
+            flex: 1;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: linear-gradient(to bottom, #2d3748, #1a202c); /* Dark gradient */
+        }
+
+        .action-item {
+            display: flex;
+            align-items: center;
+            padding: 10px; /* Reduced padding */
+            margin-bottom: 8px; /* Reduced margin */
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+            background: #4a5568; /* Item bg */
+        }
+        
+        .action-item:hover { background: #718096; }
+        .action-item.selected { 
+            background: #064e3b; /* Dark Green */
+            border-color: #48bb78;
+        }
+
+        .checkbox {
+            width: 18px; /* Slightly smaller */
+            height: 18px;
+            border: 2px solid #cbd5e0;
+            border-radius: 4px;
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .action-item.selected .checkbox {
+            background: #48bb78;
+            border-color: #48bb78;
+            color: white;
+        }
+        .action-item.selected .checkbox::after { content: '✔'; font-size: 12px; }
+        
+        /* Font size adjustments for calculator */
+        .calc-sidebar .text-card-title { font-size: 20px !important; }
+        .calc-sidebar .text-card-body { font-size: 16px !important; }
+
+        /* Tree Animation */
+        #tree-container {
+            width: 300px;
+            height: 300px;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .tree-trunk {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 100px;
+            background: #8d6e63;
+            border-radius: 4px;
+        }
+
+        .tree-leaves {
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%) scale(0);
+            width: 150px;
+            height: 150px;
+            background: #48bb78;
+            border-radius: 50%;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            opacity: 0.8;
+            box-shadow: 0 5px 15px rgba(72, 187, 120, 0.3);
+        }
+        
+        /* Different stages of tree growth */
+        .tree-stage-1 { transform: translateX(-50%) scale(0.3); background: #feb2b2; } /* Dying */
+        .tree-stage-2 { transform: translateX(-50%) scale(0.6); background: #fbd38d; } /* Weak */
+        .tree-stage-3 { transform: translateX(-50%) scale(1.0); background: #48bb78; } /* Healthy */
+        .tree-stage-4 { transform: translateX(-50%) scale(1.3); background: #2f855a; box-shadow: 0 0 20px #48bb78; } /* Thriving */
+
+        .result-card {
+            background: #2d3748; /* Dark card */
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            text-align: center;
+            width: 100%;
+        }
+
+        .co2-saved {
+            font-size: 32px;
+            font-weight: bold;
+            color: #48bb78;
+        }
+        
+        /* Floating particles */
+        .particle {
+            position: absolute;
+            background: rgba(72, 187, 120, 0.6);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: floatUp 2s linear forwards;
+        }
+        
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-100px) scale(0); opacity: 0; }
+        }
+
+        /* Image Placeholder Style (Dark Theme) */
+        .img-placeholder {
+            width: 100%;
+            height: 250px;
+            background: #2d3748;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #718096;
+            border: 2px dashed #4a5568;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+
+        /* Quiz Styles (Dark Theme) */
+        .quiz-option {
+            background: #2d3748;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        .quiz-option:hover { background: #4a5568; }
+        .quiz-option.correct { background: #2f855a; border-color: #48bb78; color: white; }
+        .quiz-option.wrong { background: #c53030; border-color: #fc8181; opacity: 0.7; color: white; }
+    </style>
+</head>
+<body>
+
+<div class="reveal">
+    <div class="slides">
+
+        <!-- Slide 1: Title -->
+        <section data-background-image="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80">
+            <div class="bg-black bg-opacity-70 p-12 rounded-xl shadow-2xl">
+                <h1 class="text-5xl font-bold mb-4 text-green-400">低碳生活实操手册</h1>
+                <h2 class="text-3xl text-green-300">普通人的蓝天贡献</h2>
+                <div class="mt-8 text-gray-300">
+                    <p>环保科普系列微课 · 第五讲（完结篇）</p>
+                    <p class="text-card-body opacity-70">主讲人：张予宁</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 2: The Butterfly Effect -->
+        <section>
+            <h3>一只蝴蝶的翅膀</h3>
+            <div class="flex items-center gap-8">
+                <div class="w-1/2">
+                    <div style="height: 400px; display: flex; align-items: center; justify-content: center; background: #0f172a; border-radius: 8px;">
+                        <!-- Blue Morpho Butterfly SVG -->
+                        <svg viewBox="0 0 500 400" width="100%" height="100%">
+                            <defs>
+                                <radialGradient id="wingGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                                    <stop offset="0%" style="stop-color:#0ea5e9;stop-opacity:1" />
+                                    <stop offset="80%" style="stop-color:#0369a1;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#000000;stop-opacity:1" />
+                                </radialGradient>
+                                <filter id="glow">
+                                    <feGaussianBlur stdDeviation="5" result="coloredBlur"/>
+                                    <feMerge>
+                                        <feMergeNode in="coloredBlur"/>
+                                        <feMergeNode in="SourceGraphic"/>
+                                    </feMerge>
+                                </filter>
+                            </defs>
+                            
+                            <!-- Left Wing Top -->
+                            <path d="M240,200 Q150,50 50,100 Q10,180 80,250 Q180,280 240,200" fill="url(#wingGradient)" stroke="#000" stroke-width="2" filter="url(#glow)">
+                                <animate attributeName="d" values="M240,200 Q150,50 50,100 Q10,180 80,250 Q180,280 240,200; M240,200 Q150,100 80,150 Q50,200 100,250 Q180,280 240,200; M240,200 Q150,50 50,100 Q10,180 80,250 Q180,280 240,200" dur="2s" repeatCount="indefinite"/>
+                            </path>
+                            <!-- Left Wing Bottom -->
+                            <path d="M240,200 Q180,300 100,350 Q150,400 220,380 Q250,300 240,200" fill="url(#wingGradient)" stroke="#000" stroke-width="2" filter="url(#glow)">
+                                <animate attributeName="d" values="M240,200 Q180,300 100,350 Q150,400 220,380 Q250,300 240,200; M240,200 Q180,280 120,320 Q160,360 220,350 Q250,300 240,200; M240,200 Q180,300 100,350 Q150,400 220,380 Q250,300 240,200" dur="2s" repeatCount="indefinite"/>
+                            </path>
+                            
+                            <!-- Right Wing Top -->
+                            <path d="M260,200 Q350,50 450,100 Q490,180 420,250 Q320,280 260,200" fill="url(#wingGradient)" stroke="#000" stroke-width="2" filter="url(#glow)">
+                                <animate attributeName="d" values="M260,200 Q350,50 450,100 Q490,180 420,250 Q320,280 260,200; M260,200 Q350,100 420,150 Q450,200 400,250 Q320,280 260,200; M260,200 Q350,50 450,100 Q490,180 420,250 Q320,280 260,200" dur="2s" repeatCount="indefinite"/>
+                            </path>
+                            <!-- Right Wing Bottom -->
+                            <path d="M260,200 Q320,300 400,350 Q350,400 280,380 Q250,300 260,200" fill="url(#wingGradient)" stroke="#000" stroke-width="2" filter="url(#glow)">
+                                <animate attributeName="d" values="M260,200 Q320,300 400,350 Q350,400 280,380 Q250,300 260,200; M260,200 Q320,280 380,320 Q340,360 280,350 Q250,300 260,200; M260,200 Q320,300 400,350 Q350,400 280,380 Q250,300 260,200" dur="2s" repeatCount="indefinite"/>
+                            </path>
+                            
+                            <!-- Body -->
+                            <ellipse cx="250" cy="200" rx="5" ry="40" fill="#333" />
+                            <circle cx="250" cy="150" r="8" fill="#333" />
+                            <!-- Antennae -->
+                            <path d="M250,150 Q230,120 220,130" stroke="#333" stroke-width="2" fill="none"/>
+                            <path d="M250,150 Q270,120 280,130" stroke="#333" stroke-width="2" fill="none"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="w-1/2 text-lg">
+                    <p class="mb-6 text-card-body">很多人觉得：</p>
+                    <blockquote class="border-l-4 border-gray-400 pl-4 italic text-gray-400 mb-6 text-card-body">
+                        “我少开一天车，对于全球变暖来说，连九牛一毛都算不上吧？”
+                    </blockquote>
+                    <p class="fragment font-bold text-green-400">❌ 错！</p>
+                    <p class="fragment mt-4 text-card-body">中国有 14 亿人。<br>如果每人每天减少 1 千克碳排放，<br>一年就是 <span class="text-3xl text-green-400 font-bold">5亿吨</span>！</p>
+                    <p class="fragment text-gray-400 mt-2 text-card-body">相当于种了 270 亿棵树。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 3: Interactive Carbon Calculator -->
+        <section data-auto-animate>
+            <h3 class="text-green-400">【互动计算】你的环保账单</h3>
+            <p class="mb-4 text-card-body">勾选你今天做到的环保小事，看看你的“环保树”能不能长大。</p>
+            
+            <div id="carbon-calculator">
+                <div class="calc-sidebar">
+                    <h4 class="text-sm font-bold text-gray-400 mb-4 uppercase tracking-wider">今日行动清单</h4>
+                    
+                    <div class="action-item" onclick="toggleAction(this, 1.2)">
+                        <div class="checkbox"></div>
+                        <div>
+                            <div class="font-bold text-card-title text-white">🚇 坐地铁/公交通勤</div>
+                            <div class="text-gray-400 text-card-body">减排 1.2 kg CO₂</div>
+                        </div>
+                    </div>
+                    
+                    <div class="action-item" onclick="toggleAction(this, 0.8)">
+                        <div class="checkbox"></div>
+                        <div>
+                            <div class="font-bold text-card-title text-white">🥡 自带餐具/拒绝一次性</div>
+                            <div class="text-gray-400 text-card-body">减排 0.8 kg CO₂</div>
+                        </div>
+                    </div>
+
+                    <div class="action-item" onclick="toggleAction(this, 2.5)">
+                        <div class="checkbox"></div>
+                        <div>
+                            <div class="font-bold text-card-title text-white">❄️ 空调调高 1 度 (夏天)</div>
+                            <div class="text-gray-400 text-card-body">减排 2.5 kg CO₂</div>
+                        </div>
+                    </div>
+
+                    <div class="action-item" onclick="toggleAction(this, 0.5)">
+                        <div class="checkbox"></div>
+                        <div>
+                            <div class="font-bold text-card-title text-white">📄 双面打印/无纸化</div>
+                            <div class="text-gray-400 text-card-body">减排 0.5 kg CO₂</div>
+                        </div>
+                    </div>
+
+                    <div class="action-item" onclick="toggleAction(this, 0.3)">
+                        <div class="checkbox"></div>
+                        <div>
+                            <div class="font-bold text-card-title text-white">💡 随手关灯</div>
+                            <div class="text-gray-400 text-card-body">减排 0.3 kg CO₂</div>
+                        </div>
+                    </div>
+                    
+                    <div class="action-item" onclick="toggleAction(this, 1.5)">
+                        <div class="checkbox"></div>
+                        <div>
+                            <div class="font-bold text-card-title text-white">♻️ 垃圾分类回收</div>
+                            <div class="text-gray-400 text-card-body">减排 1.5 kg CO₂</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="calc-main">
+                    <div id="tree-container">
+                        <div class="tree-trunk"></div>
+                        <div id="tree-leaves" class="tree-leaves tree-stage-1"></div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <p class="text-gray-400 mb-1 text-card-body">今日累计减排</p>
+                        <div class="co2-saved"><span id="total-co2">0.0</span> <span class="text-lg">kg</span></div>
+                        <div id="status-text" class="mt-2 text-sm font-bold text-red-400">还需要努力哦...</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 4: Carbon Footprint Chart -->
+        <section>
+            <h3>普通人的碳足迹构成</h3>
+            <div id="chart-carbon-footprint" style="width: 800px; height: 450px; margin: 0 auto;"></div>
+        </section>
+
+        <!-- Slide 5: Food & Clothing -->
+        <section>
+            <h3>衣食住行：不仅是省钱，更是救地球</h3>
+            <div class="grid grid-cols-2 gap-8">
+                <div class="bg-gray-800 p-6 rounded-xl border border-green-800">
+                    <h4 class="text-green-400 font-bold mb-4 text-card-title">👕 衣：少买一件快时尚</h4>
+                    <p class="text-card-body text-gray-300">每生产 1 公斤棉布，需要消耗 20,000 升水。</p>
+                    <div style="height: 150px; background-image: url('https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'); background-size: cover; margin: 10px 0; border-radius: 8px;"></div>
+                    <p class="mt-2 text-card-body text-gray-400">快时尚衣服穿几次就扔，是巨大的资源浪费。</p>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-xl border border-orange-800">
+                    <h4 class="text-orange-400 font-bold mb-4 text-card-title">🥗 食：多吃菜，少吃肉</h4>
+                    <p class="text-card-body text-gray-300">生产 1 公斤牛肉产生的温室气体，是生产 1 公斤蔬菜的 <span class="font-bold">72 倍</span>！</p>
+                    <div style="height: 180px; background: #2d3748; display: flex; align-items: center; justify-content: center; margin: 10px 0; border-radius: 8px;">
+                        <svg viewBox="0 0 400 180" width="100%" height="100%">
+                            <!-- Vegetable Salad Bowl -->
+                            <g transform="translate(50, 30)">
+                                <path d="M10,80 Q50,110 90,80 L80,50 L20,50 Z" fill="#4caf50" /> <!-- Bowl -->
+                                <circle cx="30" cy="50" r="10" fill="#8bc34a" /> <!-- Lettuce -->
+                                <circle cx="50" cy="40" r="12" fill="#cddc39" />
+                                <circle cx="70" cy="50" r="10" fill="#8bc34a" />
+                                <circle cx="50" cy="60" r="8" fill="#f44336" /> <!-- Tomato -->
+                                <text x="50" y="130" font-size="20" fill="#fff" text-anchor="middle">蔬菜 (低碳)</text>
+                            </g>
+                            
+                            <!-- VS -->
+                            <text x="200" y="90" font-size="30" fill="#fff" font-weight="bold" text-anchor="middle">VS</text>
+                            
+                            <!-- Steak -->
+                            <g transform="translate(250, 30)">
+                                <path d="M20,60 Q50,30 80,60 Q90,80 60,90 Q30,100 20,60" fill="#d32f2f" stroke="#b71c1c" stroke-width="2"/>
+                                <path d="M30,65 Q50,45 70,65" fill="none" stroke="#ffcdd2" stroke-width="2" stroke-dasharray="4,2"/>
+                                <text x="50" y="130" font-size="20" fill="#fff" text-anchor="middle">牛肉 (高碳)</text>
+                            </g>
+                        </svg>
+                    </div>
+                    <p class="mt-2 text-card-body text-gray-400">畜牧业排放了全球 15% 的温室气体。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 6: Housing & Travel -->
+        <section>
+            <h3>衣食住行：不仅是省钱，更是救地球</h3>
+            <div class="grid grid-cols-2 gap-8">
+                <div class="bg-gray-800 p-6 rounded-xl border border-blue-800">
+                    <h4 class="text-blue-400 font-bold mb-4 text-card-title">🏠 住：节能电器</h4>
+                    <p class="text-card-body text-gray-300">待机耗电占家庭用电的 10%。</p>
+                    <p class="mt-2 text-card-body text-gray-400">拔掉不用的插头，一年能省几百块电费。</p>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-xl border border-purple-800">
+                    <h4 class="text-purple-400 font-bold mb-4 text-card-title">🚲 行：绿色出行</h4>
+                    <p class="text-card-body text-gray-300">5 公里内骑车，既锻炼身体，又零排放。</p>
+                    <p class="mt-2 text-card-body text-gray-400">不仅不堵车，还能看风景。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 7: Myth Busting -->
+        <section>
+            <h3>辟谣时刻：电动车真的环保吗？</h3>
+            <div class="fragment bg-gray-800 shadow-lg p-6 rounded-xl text-center">
+                <p class="text-xl font-bold mb-4 text-white">有人说：“发电也要烧煤，电动车只是把污染转移到了电厂。”</p>
+                <div class="text-left bg-gray-700 p-4 rounded text-card-body space-y-3">
+                    <p>✅ <span class="font-bold text-green-400">确实如此，但...</span></p>
+                    <p>1. 效率更高：电厂集中燃烧的效率，远高于汽车发动机。</p>
+                    <p>2. 治理更容易：电厂有专业的脱硫脱硝设备（记得第二课吗？），汽车尾气很难处理。</p>
+                    <p>3. 未来趋势：随着风能、太阳能发电比例增加，电会越来越“绿”。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 8: Call to Action -->
+        <section>
+            <h3>我们的倡议书</h3>
+            <div class="bg-green-700 text-white p-8 rounded-xl shadow-2xl text-center">
+                <h2 class="text-3xl font-bold mb-6">做“蓝天卫士”</h2>
+                <ul class="text-left space-y-4 text-xl inline-block">
+                    <li>🌱 每周少开一天车</li>
+                    <li>🌱 拒绝一次性塑料袋</li>
+                    <li>🌱 把空调调高一度</li>
+                    <li>🌱 随手关灯，节约用水</li>
+                </ul>
+                <div class="mt-8 pt-6 border-t border-green-500">
+                    <p class="text-lg">每一个微小的行动，汇聚起来就是改变世界的力量。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 9: Quiz -->
+        <section>
+            <h3>🧠 环保知识小测验</h3>
+            <div class="bg-gray-800 p-6 rounded-xl">
+                <p class="text-lg mb-4 text-white">Q: 下列哪种行为减排效果最显著？</p>
+                <div class="quiz-option text-white" onclick="checkAnswer(this, false)">A. 每天少喝一杯水</div>
+                <div class="quiz-option text-white" onclick="checkAnswer(this, false)">B. 用纸巾代替手帕</div>
+                <div class="quiz-option text-white" onclick="checkAnswer(this, true)">C. 夏天空调调高 1 度</div>
+                <div class="quiz-feedback mt-4 hidden font-bold text-center"></div>
+            </div>
+        </section>
+
+        <!-- Slide 10: Series Summary -->
+        <section>
+            <h3>系列微课总结</h3>
+            <div class="grid grid-cols-5 gap-2 text-card-body text-center">
+                <div class="p-2 bg-gray-800 rounded opacity-50">
+                    <div class="font-bold text-gray-300">第1课</div>
+                    PM2.5与臭氧<br>看不见的战争
+                </div>
+                <div class="p-2 bg-gray-800 rounded opacity-50">
+                    <div class="font-bold text-gray-300">第2课</div>
+                    工业净化<br>钢铁变绿
+                </div>
+                <div class="p-2 bg-gray-800 rounded opacity-50">
+                    <div class="font-bold text-gray-300">第3课</div>
+                    清洁供暖<br>温暖不黑天
+                </div>
+                <div class="p-2 bg-gray-800 rounded opacity-50">
+                    <div class="font-bold text-gray-300">第4课</div>
+                    智慧监测<br>天罗地网
+                </div>
+                <div class="p-2 bg-green-900 rounded border border-green-500">
+                    <div class="font-bold text-green-400">第5课</div>
+                    低碳生活<br>蓝天卫士
+                </div>
+            </div>
+            <div class="mt-8 text-center">
+                <p class="text-xl text-gray-300">感谢大家陪伴我们走完这 5 节课的旅程！</p>
+            </div>
+        </section>
+
+        <!-- Slide 11: End -->
+        <section data-background-image="https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80">
+            <div class="bg-black bg-opacity-60 p-12 rounded-xl text-center shadow-2xl">
+                <h1 class="text-5xl font-bold mb-4 text-white drop-shadow-lg">未来逐绿 · 辽疆清穹</h1>
+                <h2 class="text-3xl text-green-300 drop-shadow-md">愿我们的天空永远蔚蓝</h2>
+                <div class="mt-8 text-gray-200 text-xl border-t border-gray-500 pt-6">
+                    <p class="text-card-body">未来技术学院 辽筑清穹实践团</p>
+                    <p class="text-card-body opacity-80 mt-2">2026年2月</p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.js"></script>
+<script>
+    Reveal.initialize({
+        controls: true,
+        progress: true,
+        center: true,
+        hash: true,
+        transition: 'slide',
+        backgroundTransition: 'zoom'
+    });
+
+    // ECharts Initialization
+    const chartDom = document.getElementById('chart-carbon-footprint');
+    if (chartDom) {
+        const myChart = echarts.init(chartDom, 'dark');
+        const option = {
+            backgroundColor: 'transparent',
+            tooltip: { trigger: 'item' },
+            legend: { top: '5%', left: 'center', textStyle: { color: '#fff' } },
+            series: [
+                {
+                    name: '碳足迹',
+                    type: 'pie',
+                    radius: ['40%', '70%'],
+                    itemStyle: {
+                        borderRadius: 10,
+                        borderColor: '#1a202c',
+                        borderWidth: 2
+                    },
+                    label: { show: true, fontSize: 16, color: '#fff' },
+                    emphasis: {
+                        label: { show: true, fontSize: 24, fontWeight: 'bold', color: '#fff' }
+                    },
+                    data: [
+                        { value: 30, name: '居住 (用电/取暖)', itemStyle: { color: '#f6ad55' } },
+                        { value: 25, name: '交通出行', itemStyle: { color: '#68d391' } },
+                        { value: 20, name: '食品消费', itemStyle: { color: '#63b3ed' } },
+                        { value: 15, name: '商品服务', itemStyle: { color: '#b794f4' } },
+                        { value: 10, name: '其他', itemStyle: { color: '#cbd5e0' } }
+                    ]
+                }
+            ]
+        };
+        // Increase Legend Font Size
+        option.legend.textStyle.fontSize = 18;
+        myChart.setOption(option);
+    }
+
+    // Carbon Calculator Logic
+    let totalCO2 = 0;
+    
+    function toggleAction(element, value) {
+        const isSelected = element.classList.contains('selected');
+        const tree = document.getElementById('tree-leaves');
+        const status = document.getElementById('status-text');
+        
+        if (isSelected) {
+            element.classList.remove('selected');
+            totalCO2 -= value;
+        } else {
+            element.classList.add('selected');
+            totalCO2 += value;
+            createParticles(element);
+        }
+        
+        // Update Total
+        document.getElementById('total-co2').innerText = totalCO2.toFixed(1);
+        
+        // Update Tree Stage
+        tree.className = 'tree-leaves transition-all duration-500'; // Reset
+        status.className = 'mt-2 text-sm font-bold transition-colors duration-300';
+
+        if (totalCO2 < 1) {
+            tree.classList.add('tree-stage-1');
+            status.innerText = "还需要努力哦...";
+            status.classList.add('text-red-400');
+        } else if (totalCO2 < 3) {
+            tree.classList.add('tree-stage-2');
+            status.innerText = "做得不错！";
+            status.classList.add('text-yellow-500');
+        } else if (totalCO2 < 5) {
+            tree.classList.add('tree-stage-3');
+            status.innerText = "太棒了！环保达人！";
+            status.classList.add('text-green-500');
+        } else {
+            tree.classList.add('tree-stage-4');
+            status.innerText = "🌍 地球感谢有你！";
+            status.classList.add('text-green-500');
+        }
+    }
+
+    function createParticles(element) {
+        const rect = element.getBoundingClientRect();
+        const container = document.getElementById('carbon-calculator').getBoundingClientRect();
+        
+        for(let i=0; i<5; i++) {
+            const p = document.createElement('div');
+            p.className = 'particle';
+            const size = Math.random() * 10 + 5;
+            p.style.width = size + 'px';
+            p.style.height = size + 'px';
+            
+            // Position relative to calculator container
+            p.style.left = (rect.left - container.left + 20 + Math.random()*20) + 'px';
+            p.style.top = (rect.top - container.top + Math.random()*20) + 'px';
+            
+            document.getElementById('carbon-calculator').appendChild(p);
+            
+            setTimeout(() => p.remove(), 2000);
+        }
+    }
+
+    // Quiz Logic
+    function checkAnswer(element, isCorrect) {
+        const parent = element.parentElement;
+        const feedback = parent.querySelector('.quiz-feedback');
+        
+        // Disable all clicks in this question
+        const options = parent.querySelectorAll('.quiz-option');
+        options.forEach(opt => opt.onclick = null);
+
+        if (isCorrect) {
+            element.classList.add('correct');
+            feedback.innerText = "✅ 回答正确！这可是减排大户！";
+            feedback.classList.remove('hidden', 'text-red-500');
+            feedback.classList.add('text-green-500');
+        } else {
+            element.classList.add('wrong');
+            feedback.innerText = "❌ 答错了。空调每调高1度，节电7%-10%。";
+            feedback.classList.remove('hidden', 'text-green-500');
+            feedback.classList.add('text-red-500');
+        }
+    }
+</script>
+
+</body>
+</html>

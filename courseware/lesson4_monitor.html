@@ -1,0 +1,571 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第四课：谁在监视天空？ - 智慧环保与监测黑科技</title>
+    
+    <!-- Reveal.js CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/theme/black.css" id="theme">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    
+    <!-- ECharts -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+
+    <!-- Custom CSS -->
+    <style>
+        .reveal .slides section {
+            text-align: left;
+            font-size: 34px;
+            font-weight: normal;
+        }
+        .reveal p, .reveal li {
+            font-size: 1em;
+            line-height: 1.6;
+        }
+        .reveal ul ul, .reveal ol ol {
+            font-size: 1em;
+        }
+        .reveal h1 { font-size: 2.6em; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+        .reveal h2 { font-size: 2.0em; }
+        .reveal h3 { font-size: 1.5em; }
+        .reveal h1, .reveal h2, .reveal h3 {
+            text-transform: none;
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+        .text-card-title { font-size: 30px !important; }
+        .text-card-body { font-size: 24px !important; }
+        
+        /* Dashboard Simulator Styles */
+        #eco-dashboard {
+            position: relative;
+            width: 900px;
+            height: 550px;
+            margin: 0 auto;
+            background: #0f172a;
+            border: 2px solid #334155;
+            border-radius: 8px;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            grid-template-rows: 60px 1fr;
+        }
+        
+        .dash-header {
+            grid-column: 1 / -1;
+            background: #1e293b;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            border-bottom: 1px solid #334155;
+        }
+
+        .dash-sidebar {
+            background: #1e293b;
+            padding: 15px; /* Reduced padding */
+            border-right: 1px solid #334155;
+            display: flex;
+            flex-direction: column;
+            gap: 10px; /* Reduced gap */
+        }
+        
+        .stat-card {
+            background: #334155;
+            padding: 10px; /* Reduced padding */
+            border-radius: 6px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 20px; /* Smaller font */
+            font-weight: bold;
+            color: #38bdf8;
+        }
+        
+        .stat-label {
+            font-size: 10px; /* Smaller font */
+            color: #94a3b8;
+        }
+        
+        /* Font size override for sidebar log */
+        #log-list { font-size: 12px !important; }
+        .dash-sidebar .text-card-body { font-size: 14px !important; }
+
+        .dash-map-area {
+            position: relative;
+            background: #0f172a;
+        }
+
+        #map-container {
+            width: 100%;
+            height: 100%;
+            background: #0f172a; /* Fallback */
+            z-index: 1;
+        }
+
+        /* Alert Box Overlay */
+        #alert-modal {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(15, 23, 42, 0.95);
+            border: 2px solid #ef4444;
+            border-radius: 12px;
+            padding: 20px;
+            width: 400px;
+            z-index: 1000;
+            display: none;
+            box-shadow: 0 0 50px rgba(239, 68, 68, 0.3);
+        }
+
+        .alert-image {
+            width: 100%;
+            height: 200px;
+            background-color: #333;
+            margin-bottom: 15px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 4px;
+        }
+
+        /* Scanning Animation */
+        .scan-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: rgba(56, 189, 248, 0.5);
+            box-shadow: 0 0 10px #38bdf8;
+            animation: scan 3s linear infinite;
+            pointer-events: none;
+            z-index: 500;
+        }
+
+        @keyframes scan {
+            0% { top: 0; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
+        
+        /* Pulsing Alert Marker Effect */
+        .alert-marker {
+            animation: pulse-red 1.5s infinite;
+        }
+
+        @keyframes pulse-red {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+
+        /* Image Placeholder Style */
+        .img-placeholder {
+            width: 100%;
+            height: 250px;
+            background: #2d3748;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #718096;
+            border: 2px dashed #4a5568;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+
+        /* Quiz Styles */
+        .quiz-option {
+            background: #2d3748;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        .quiz-option:hover { background: #4a5568; }
+        .quiz-option.correct { background: #2f855a; border-color: #48bb78; }
+        .quiz-option.wrong { background: #c53030; border-color: #fc8181; opacity: 0.7; }
+    </style>
+</head>
+<body>
+
+<div class="reveal">
+    <div class="slides">
+
+        <!-- Slide 1: Title -->
+        <section data-background-gradient="linear-gradient(to bottom right, #0f172a, #1e3a8a)">
+            <div class="bg-black bg-opacity-70 p-12 rounded-xl">
+                <h1 class="text-5xl font-bold mb-4">谁在监视天空？</h1>
+                <h2 class="text-3xl text-blue-400">智慧环保与监测黑科技</h2>
+                <div class="mt-12 text-gray-300 text-xl border-t border-gray-600 pt-6">
+                    <p class="text-card-body">环保科普系列微课 · 第四讲</p>
+                    <p class="mt-2 text-card-body opacity-70">主讲人：刘夏君</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 2: The Challenge -->
+        <section>
+            <h3>以前的困境：猫捉老鼠</h3>
+            <div class="grid grid-cols-2 gap-8 items-center">
+                <div class="bg-gray-800 p-6 rounded-lg">
+                    <div class="text-6xl text-center mb-4">🕵️‍♂️</div>
+                    <p class="text-center text-card-body">以前靠环保人员跑断腿，<br>一家家工厂去查。</p>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-lg">
+                    <div class="text-6xl text-center mb-4">🌙</div>
+                    <p class="text-center text-card-body">有些工厂白天不开工，<br><span class="text-red-400 font-bold">半夜偷偷排污</span>，根本抓不到。</p>
+                </div>
+            </div>
+            <!-- Replaced Image -->
+            <div class="mt-4" style="height: 200px; background-image: url('https://images.unsplash.com/photo-1516937941344-00b4e0337589?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'); background-size: cover; background-position: center; border-radius: 8px;"></div>
+        </section>
+
+        <!-- Slide 3: Interactive Dashboard Intro -->
+        <section>
+            <h3>【沉浸体验】环保局指挥中心</h3>
+            <p class="mb-4 text-card-body">你现在是环保局的指挥官。系统监测到了异常信号，请点击地图上的红点进行排查。</p>
+            <div class="flex gap-4 text-card-body justify-center mb-6">
+                <span class="bg-gray-700 px-3 py-1 rounded">🛰️ 卫星在线</span>
+                <span class="bg-gray-700 px-3 py-1 rounded">🚁 无人机待命</span>
+                <span class="bg-gray-700 px-3 py-1 rounded">📡 地面站联网</span>
+            </div>
+        </section>
+
+        <!-- Slide 4: The Dashboard Simulator -->
+        <section data-auto-animate>
+            <div id="eco-dashboard">
+                <div class="dash-header">
+                    <div class="flex items-center gap-2">
+                        <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                        <span class="font-bold tracking-wider text-card-title">ECO-MONITOR SYSTEM v4.0</span>
+                    </div>
+                    <div class="text-card-body font-mono text-gray-400" id="clock">14:32:05</div>
+                </div>
+                
+                <div class="dash-sidebar">
+                    <div class="stat-card">
+                        <div class="stat-value text-green-400">35</div>
+                        <div class="stat-label text-card-body">全市 AQI 平均值</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value text-yellow-400">3</div>
+                        <div class="stat-label text-card-body">今日预警数</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">100%</div>
+                        <div class="stat-label text-card-body">设备在线率</div>
+                    </div>
+                    
+                    <div class="mt-auto bg-blue-900 bg-opacity-30 p-3 rounded text-card-body border border-blue-800">
+                        <p class="font-bold mb-2">系统日志：</p>
+                        <ul class="space-y-1 font-mono text-gray-400" id="log-list">
+                            <li>> [14:30] 卫星数据更新...</li>
+                            <li>> [14:31] 区域B出现热异常</li>
+                            <li>> [14:32] 正在扫描...</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="dash-map-area">
+                    <div id="map-container"></div>
+                    <div class="scan-line"></div>
+                    
+                    <!-- Alert Modal -->
+                    <div id="alert-modal">
+                        <div class="flex justify-between items-center mb-2">
+                            <h4 class="text-red-500 font-bold text-xl m-0">⚠️ 发现异常排放！</h4>
+                            <button onclick="closeModal()" class="text-gray-400 hover:text-white">&times;</button>
+                        </div>
+                        <div class="alert-image" id="alert-img" style="background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'); filter: invert(1) hue-rotate(180deg) contrast(150%); height: 150px; margin-bottom: 10px;">
+                        </div>
+                        <div class="space-y-1 text-base">
+                            <p><span class="text-gray-400">位置：</span> <span id="alert-loc">城北工业园 A区</span></p>
+                            <p><span class="text-gray-400">监测源：</span> <span id="alert-source" class="text-blue-400">无人机红外热成像</span></p>
+                            <p><span class="text-gray-400">数值：</span> <span id="alert-val" class="text-red-500 font-bold">NOx > 300 mg/m³</span></p>
+                            <p><span class="text-gray-400">判定：</span> <span class="bg-red-900 text-red-200 px-2 py-0.5 rounded text-sm">涉嫌偷排</span></p>
+                        </div>
+                        <button class="w-full mt-2 bg-blue-600 hover:bg-blue-500 py-1.5 rounded font-bold text-base transition-colors" onclick="closeModal()">派遣执法队</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 5: Tech 1 - Satellite -->
+        <section>
+            <h3>1. 天眼：卫星遥感</h3>
+            <div class="grid grid-cols-2 gap-8">
+                <div class="bg-gray-800 p-6 rounded-xl flex items-center justify-center">
+                    <div style="height: 250px; width: 100%; background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'); background-size: cover; border-radius: 8px;"></div>
+                </div>
+                <div>
+                    <h4 class="text-blue-400 font-bold mb-4 text-card-title">本领：</h4>
+                    <ul class="space-y-4 text-card-body">
+                        <li class="fragment">🌍 <span class="text-green-400">宏观扫描</span>：一眼看清全市、全省的污染分布。</li>
+                        <li class="fragment">🔥 <span class="text-red-400">火点监测</span>：哪里在烧秸秆？哪里工厂温度异常？逃不过它的眼睛。</li>
+                        <li class="fragment">🕒 <span class="text-yellow-400">全天候</span>：不管白天黑夜，甚至穿透云层。</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 6: Tech 2 - Drone -->
+        <section>
+            <h3>2. 猎鹰：无人机巡查</h3>
+            <div class="grid grid-cols-2 gap-8">
+                <div class="bg-gray-800 p-6 rounded-xl flex items-center justify-center">
+                     <div style="height: 250px; width: 100%; background-image: url('https://images.unsplash.com/photo-1473968512647-3e447244af8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'); background-size: cover; border-radius: 8px;"></div>
+                </div>
+                <div>
+                    <h4 class="text-green-400 font-bold mb-4 text-card-title">本领：</h4>
+                    <ul class="space-y-4 text-card-body">
+                        <li class="fragment">📸 <span class="text-blue-400">高清取证</span>：拍下偷排的照片、视频。</li>
+                        <li class="fragment">👃 <span class="text-purple-400">嗅探传感器</span>：搭载气体分析仪，实时测出烟气成分。</li>
+                        <li class="fragment">🎯 <span class="text-red-400">定点打击</span>：人进不去的地方，它能去。</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 7: Tech 3 - Grid Monitoring -->
+        <section>
+            <h3>3. 地网：网格化微站</h3>
+            <div class="grid grid-cols-2 gap-8">
+                <div class="bg-gray-800 p-6 rounded-xl flex items-center justify-center">
+                     <!-- Replaced Image -->
+                     <div style="height: 250px; width: 100%; background-image: url('https://images.unsplash.com/photo-1532601224476-15c79f2f7a51?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'); background-size: cover; border-radius: 8px;"></div>
+                </div>
+                <div>
+                    <h4 class="text-yellow-400 font-bold mb-4 text-card-title">本领：</h4>
+                    <ul class="space-y-4 text-card-body">
+                        <li class="fragment">🏘️ <span class="text-blue-400">高密度</span>：每隔几百米就有一个。</li>
+                        <li class="fragment">🚨 <span class="text-red-400">秒级报警</span>：一旦某地数值飙升，系统立刻报警。</li>
+                        <li class="fragment">📍 <span class="text-green-400">精准溯源</span>：能算出污染是从哪个方向飘过来的。</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 8: Data Visualization -->
+        <section>
+            <h3>智慧环保大数据平台</h3>
+            <div id="chart-dashboard-sim" style="width: 800px; height: 400px; margin: 0 auto;"></div>
+        </section>
+
+        <!-- Slide 9: Data Fraud -->
+        <section>
+            <h3>数据造假？别想了！</h3>
+            <div class="bg-gray-800 p-8 rounded-xl">
+                <p class="text-card-title font-bold text-red-400 mb-4">曾经的手段：</p>
+                <div class="grid grid-cols-3 gap-4 text-center text-card-body text-gray-400 mb-6">
+                    <div class="bg-gray-900 p-3 rounded">给探头戴口罩</div>
+                    <div class="bg-gray-900 p-3 rounded">喷淋头对着吹</div>
+                    <div class="bg-gray-900 p-3 rounded">修改后台数据</div>
+                </div>
+                <p class="text-card-title font-bold text-green-400 mb-4">现在的对策：</p>
+                <ul class="space-y-2 text-card-body">
+                    <li class="fragment">✅ <span class="text-blue-400">数据直传</span>：数据直接发到国家环保部，谁也改不了。</li>
+                    <li class="fragment">✅ <span class="text-blue-400">视频监控</span>：站房里24小时监控，谁动了设备一清二楚。</li>
+                    <li class="fragment">✅ <span class="text-blue-400">比对监测</span>：还有走航车流动抽查。</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Slide 10: Summary -->
+        <section data-background-gradient="linear-gradient(to top left, #1a202c, #2c5282)">
+            <h3>今日知识点回顾</h3>
+            <div class="text-left bg-gray-900 p-8 rounded-xl border-l-8 border-green-500 shadow-2xl">
+                <ol class="space-y-6 text-card-body">
+                    <li class="fragment">🛰️ <span class="text-blue-400">天罗地网</span>：卫星、无人机、微站，让污染无处遁形。</li>
+                    <li class="fragment">📊 <span class="text-green-400">大数据</span>：实时分析，精准定位污染源。</li>
+                    <li class="fragment">🔒 <span class="text-red-400">零容忍</span>：高科技手段防止数据造假，守护真实。</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- Slide 11: Next Preview -->
+        <section>
+            <p class="text-gray-400 tracking-widest uppercase text-card-body">Next Episode</p>
+            <h2 class="text-4xl font-bold mt-4 mb-8 text-white">下集预告</h2>
+            <div class="bg-gray-800 p-8 rounded-xl transform rotate-1 hover:rotate-0 transition-transform duration-500 border border-gray-700">
+                <h3 class="text-green-400 mb-4">蓝天卫士，有你一份</h3>
+                <p class="text-gray-300 text-card-body">环保不只是政府的事，我们普通人能做什么？</p>
+                <p class="text-gray-300 mt-2 text-card-body">低碳生活真的很难吗？</p>
+                <div class="mt-6 flex justify-center gap-4 text-4xl">
+                    <span>🚲</span>
+                    <span>♻️</span>
+                    <span>🌏</span>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Slide 12: End -->
+        <section data-background-image="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80">
+            <div class="bg-black bg-opacity-60 p-12 rounded-xl relative z-10">
+                <h1 class="text-white font-bold mb-4">感谢观看</h1>
+                <p class="text-green-400 text-card-body">未来逐绿 · 辽疆清穹</p>
+                <p class="text-gray-400 mt-8 text-card-body">未来技术学院 辽筑清穹实践团</p>
+            </div>
+        </section>
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+    Reveal.initialize({
+        controls: true,
+        progress: true,
+        center: true,
+        hash: true,
+        transition: 'slide'
+    });
+
+    // Clock
+    setInterval(() => {
+        const now = new Date();
+        document.getElementById('clock').innerText = now.toLocaleTimeString();
+    }, 1000);
+
+    // Map Initialization
+    let map;
+    
+    // We need to initialize the map only when the slide is visible, or after load
+    // Reveal.js hides slides which messes up Leaflet sizing.
+    Reveal.on('slidechanged', event => {
+        if (event.currentSlide.querySelector('#map-container')) {
+            if (!map) {
+                initMap();
+            } else {
+                setTimeout(() => map.invalidateSize(), 100);
+            }
+        }
+    });
+
+    function initMap() {
+        map = L.map('map-container', {
+            center: [41.2947, 123.7578], // Benxi coordinates
+            zoom: 13,
+            zoomControl: false,
+            attributionControl: false
+        });
+
+        // Use a dark styled map
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+            maxZoom: 19
+        }).addTo(map);
+
+        // Add Markers
+        const locations = [
+            { lat: 41.30, lng: 123.76, type: 'normal' },
+            { lat: 41.29, lng: 123.75, type: 'normal' },
+            { lat: 41.28, lng: 123.77, type: 'alert', title: '化工厂 B区' }, // The Red One
+            { lat: 41.31, lng: 123.74, type: 'normal' }
+        ];
+
+        locations.forEach(loc => {
+            const color = loc.type === 'alert' ? '#ef4444' : '#4ade80';
+            
+            const circle = L.circleMarker([loc.lat, loc.lng], {
+                radius: loc.type === 'alert' ? 12 : 8,
+                fillColor: color,
+                color: '#fff',
+                weight: 1,
+                opacity: 1,
+                fillOpacity: 0.8,
+                className: loc.type === 'alert' ? 'alert-marker' : ''
+            }).addTo(map);
+
+            if (loc.type === 'alert') {
+                circle.on('click', () => {
+                    showAlert(loc.title);
+                });
+            }
+        });
+    }
+
+    function showAlert(title) {
+        const modal = document.getElementById('alert-modal');
+        const img = document.getElementById('alert-img');
+        const loc = document.getElementById('alert-loc');
+        
+        // Image set via CSS in HTML for placeholder support
+        
+        loc.innerText = title || '未知区域';
+        modal.style.display = 'block';
+
+        // Add log
+        const list = document.getElementById('log-list');
+        const li = document.createElement('li');
+        li.innerText = `> [${new Date().toLocaleTimeString()}] ⚠️ 报警：${title}`;
+        li.className = "text-red-400 font-bold";
+        list.prepend(li);
+    }
+
+    function closeModal() {
+        document.getElementById('alert-modal').style.display = 'none';
+    }
+
+    // Fallback init if slide is first
+    if (document.querySelector('#map-container')) {
+        setTimeout(initMap, 500);
+    }
+
+    // ECharts for Slide 8
+    const chartDom = document.getElementById('chart-dashboard-sim');
+    if (chartDom) {
+        const myChart = echarts.init(chartDom, 'dark');
+        const option = {
+            backgroundColor: 'transparent',
+            tooltip: { trigger: 'axis' },
+            legend: { data: ['PM2.5', 'NOx', 'SO2'], textStyle: { color: '#fff' } },
+            grid: { left: '3%', right: '4%', bottom: '3%', containLabel: true },
+            xAxis: { type: 'category', boundaryGap: false, data: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', '24:00'] },
+            yAxis: { type: 'value' },
+            series: [
+                { name: 'PM2.5', type: 'line', smooth: true, data: [30, 25, 45, 60, 55, 40, 35], itemStyle: {color: '#4ade80'} },
+                { name: 'NOx', type: 'line', smooth: true, data: [20, 15, 30, 40, 35, 25, 20], itemStyle: {color: '#facc15'} },
+                { name: 'SO2', type: 'line', smooth: true, data: [10, 8, 15, 20, 18, 12, 10], itemStyle: {color: '#38bdf8'} }
+            ]
+        };
+        myChart.setOption(option);
+    }
+
+    // Quiz Logic
+    function checkAnswer(element, isCorrect) {
+        const parent = element.parentElement;
+        const feedback = parent.querySelector('.quiz-feedback');
+        
+        // Disable all clicks in this question
+        const options = parent.querySelectorAll('.quiz-option');
+        options.forEach(opt => opt.onclick = null);
+
+        if (isCorrect) {
+            element.classList.add('correct');
+            feedback.innerText = "✅ 回答正确！系统会实时响应。";
+            feedback.classList.remove('hidden', 'text-red-500');
+            feedback.classList.add('text-green-500');
+        } else {
+            element.classList.add('wrong');
+            feedback.innerText = "❌ 答错了。是秒级报警，不会等明天的。";
+            feedback.classList.remove('hidden', 'text-green-500');
+            feedback.classList.add('text-red-500');
+        }
+    }
+
+</script>
+
+</body>
+</html>
