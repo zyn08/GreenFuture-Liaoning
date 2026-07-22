@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第三课：温暖不“黑”天 - 北方供暖的清洁进化论</title>
+    
+    <!-- Reveal.js CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/theme/black.css" id="theme">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- ECharts -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+
+    <!-- Custom CSS -->
+    <style>
+        .reveal .slides section {
+            text-align: center;
+            font-size: 34px;
+            font-weight: normal;
+        }
+        .reveal p, .reveal li {
+            font-size: 1em;
+            line-height: 1.6;
+        }
+        .reveal ul ul, .reveal ol ol {
+            font-size: 1em;
+        }
+        .reveal h1 { font-size: 2.6em; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+        .reveal h2 { font-size: 2.0em; }
+        .reveal h3 { font-size: 1.5em; }
+        .reveal h1, .reveal h2, .reveal h3 {
+            text-transform: none;
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+        .text-card-title { font-size: 30px !important; }
+        .text-card-body { font-size: 24px !important; }
+        
+        /* Image Placeholder Style */
+        .img-placeholder {
+            width: 100%;
+            height: 250px;
+            background: #2d3748;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #718096;
+            border: 2px dashed #4a5568;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+
+        /* Quiz Styles */
+        .quiz-option {
+            background: #2d3748;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        .quiz-option:hover { background: #4a5568; }
+        .quiz-option.correct { background: #2f855a; border-color: #48bb78; }
+        .quiz-option.wrong { background: #c53030; border-color: #fc8181; opacity: 0.7; }
+    </style>
+</head>
+<body>
+
+<div class="reveal">
+    <div class="slides">
+
+        <!-- Slide 1: Title -->
+        <section data-background-gradient="linear-gradient(to bottom right, #2c5282, #1a202c)">
+            <div class="bg-black bg-opacity-60 p-12 rounded-xl">
+                <h1 class="text-5xl font-bold mb-4">温暖不“黑”天</h1>
+                <h2 class="text-3xl text-orange-400">北方供暖的清洁进化论</h2>
+                <div class="mt-12 text-gray-300 text-xl border-t border-gray-600 pt-6">
+                    <p class="text-card-body">环保科普系列微课 · 第三讲</p>
+                    <p class="mt-2 text-card-body opacity-70">主讲人：柳沛东</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 2: The Winter Dilemma -->
+        <section>
+            <h3>冬天的两难：要温暖还是要蓝天？</h3>
+            <div class="grid grid-cols-2 gap-8 items-center">
+                <div class="bg-gray-800 p-6 rounded-lg">
+                    <div class="text-6xl text-center mb-4">🥶</div>
+                    <p class="text-center text-card-body">北方冬天动辄零下二三十度，<br><span class="text-orange-400 font-bold">供暖是刚需，是保命。</span></p>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-lg">
+                    <div class="text-6xl text-center mb-4">🌫️</div>
+                    <p class="text-center text-card-body">一旦开始烧煤供暖，<br><span class="text-gray-400 font-bold">雾霾就随之而来。</span></p>
+                </div>
+            </div>
+            <div class="mt-8 fragment">
+                <p class="text-xl">过去很长一段时间，这是一个死结。</p>
+            </div>
+        </section>
+
+        <!-- Slide 3: Solution 1 - Coal to Gas/Electric -->
+        <section>
+            <h3>解法一：煤改电 / 煤改气</h3>
+            <div class="flex justify-center gap-12">
+                <div class="bg-gray-800 p-8 rounded-xl w-1/3">
+                    <div class="text-6xl text-center mb-6">⚡</div>
+                    <h4 class="text-blue-400 font-bold text-card-title mb-4">煤改电</h4>
+                    <p class="text-card-body">用电热膜、热泵代替烧煤。</p>
+                </div>
+                <div class="bg-gray-800 p-8 rounded-xl w-1/3">
+                    <div class="text-6xl text-center mb-6">🔥</div>
+                    <h4 class="text-blue-400 font-bold text-card-title mb-4">煤改气</h4>
+                    <p class="text-card-body">用天然气壁挂炉代替煤炉。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 4: Solution 2 - Industrial Waste Heat -->
+        <section>
+            <h3>解法二：变废为宝 —— 工业余热供暖</h3>
+            <div class="flex items-center justify-center gap-4 text-center px-4">
+                <div class="bg-gray-800 p-4 rounded flex-1 fragment" data-fragment-index="1">
+                    <div class="text-4xl">🏭</div>
+                    <p class="font-bold mt-2 text-card-title">工厂废热</p>
+                    <p class="text-gray-400 text-card-body">冷却水、烟气余热<br>以前直接排掉</p>
+                </div>
+                <div class="text-2xl text-orange-400 font-bold fragment shrink-0" data-fragment-index="2">➡️</div>
+                <div class="bg-gray-800 p-4 rounded flex-1 fragment" data-fragment-index="2">
+                    <div class="text-4xl">🔄</div>
+                    <p class="font-bold mt-2 text-card-title">热交换站</p>
+                    <p class="text-gray-400 text-card-body">提取热量<br>加热循环水</p>
+                </div>
+                <div class="text-2xl text-orange-400 font-bold fragment shrink-0" data-fragment-index="3">➡️</div>
+                <div class="bg-gray-800 p-4 rounded flex-1 fragment" data-fragment-index="3">
+                    <div class="text-4xl">🏠</div>
+                    <p class="font-bold mt-2 text-card-title">居民家中</p>
+                    <p class="text-gray-400 text-card-body">温暖如春<br>且不烧一块煤</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 5: Case Study - Benxi Waste Heat -->
+        <section>
+            <h3>本溪案例：冲渣水余热供暖</h3>
+            <div class="grid grid-cols-2 gap-8 items-center">
+                <div>
+                    <div style="background-image: url('https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'); background-size: cover; height: 300px; border-radius: 8px;"></div>
+                </div>
+                <div class="text-card-body">
+                    <h4 class="text-orange-400 font-bold mb-4 text-card-title">本钢高炉冲渣水</h4>
+                    <p class="mb-4">炼铁产生的高温炉渣，需要用水冲冷。这些水吸收了大量热量，变成了 80°C 左右的热水。</p>
+                    <ul class="space-y-2">
+                        <li class="fragment">✅ <span class="text-green-400">覆盖面积</span>：主城区很大一部分供暖。</li>
+                        <li class="fragment">✅ <span class="text-green-400">节能减排</span>：每年节约标煤数十万吨。</li>
+                        <li class="fragment">✅ <span class="text-green-400">双赢</span>：钢厂不用花钱冷却水，居民有了便宜暖气。</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 6: Comparison Chart -->
+        <section>
+            <h3>不同供暖方式的碳排放对比</h3>
+            <div id="chart-heating" style="width: 800px; height: 400px; margin: 0 auto;"></div>
+        </section>
+
+        <!-- Slide 7: Future Heating -->
+        <section>
+            <h3>未来的供暖：不仅清洁，还要智慧</h3>
+            <div class="grid grid-cols-3 gap-4 text-center">
+                <div class="bg-gray-800 p-4 rounded fragment">
+                    <div class="text-4xl mb-2">🧠</div>
+                    <h4 class="font-bold text-card-title">智慧热网</h4>
+                    <p class="text-gray-400 text-card-body">根据天气自动调节温度<br>不冷也不燥</p>
+                </div>
+                <div class="bg-gray-800 p-4 rounded fragment">
+                    <div class="text-4xl mb-2">☀️</div>
+                    <h4 class="font-bold text-card-title">多能互补</h4>
+                    <p class="text-gray-400 text-card-body">太阳能 + 地热 + 余热<br>多种能源组合</p>
+                </div>
+                <div class="bg-gray-800 p-4 rounded fragment">
+                    <div class="text-4xl mb-2">🏚️</div>
+                    <h4 class="font-bold text-card-title">建筑保温</h4>
+                    <p class="text-gray-400 text-card-body">给房子穿厚衣服<br>减少热量流失</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 8: Quiz -->
+        <section>
+            <h3>🧠 环保知识小测验</h3>
+            <div class="bg-gray-800 p-6 rounded-xl">
+                <p class="mb-4 text-card-title">Q: 工业余热供暖的最大优势是什么？</p>
+                <div class="quiz-option text-card-body" onclick="checkAnswer(this, false)">A. 只要有太阳就能用</div>
+                <div class="quiz-option text-card-body" onclick="checkAnswer(this, true)">B. 利用废弃热量，新增碳排放几乎为零</div>
+                <div class="quiz-option text-card-body" onclick="checkAnswer(this, false)">C. 可以在家里烧煤</div>
+                <div class="quiz-feedback mt-4 hidden font-bold text-center text-card-body"></div>
+            </div>
+        </section>
+
+        <!-- Slide 9: Summary -->
+        <section data-background-gradient="linear-gradient(to top left, #1a202c, #2c5282)">
+            <h3>今日知识点回顾</h3>
+            <div class="bg-gray-900 p-8 rounded-xl border-l-8 border-orange-500 shadow-2xl">
+                <ol class="space-y-6 text-card-body">
+                    <li class="fragment">🔥 <span class="text-red-400">散煤</span> 是冬季雾霾的重要推手，必须淘汰。</li>
+                    <li class="fragment">🔄 <span class="text-orange-400">余热利用</span> 是最聪明的供暖方式，变废为宝。</li>
+                    <li class="fragment">⚡ <span class="text-blue-400">清洁取暖</span> 让北方冬天既有温度，又有风度（蓝天）。</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- Slide 10: Next Preview -->
+        <section>
+            <p class="text-gray-400 tracking-widest uppercase text-card-body">Next Episode</p>
+            <h2 class="text-4xl font-bold mt-4 mb-8 text-white">下集预告</h2>
+            <div class="bg-gray-800 p-8 rounded-xl transform rotate-1 hover:rotate-0 transition-transform duration-500 border border-gray-700">
+                <h3 class="text-blue-400 mb-4">谁在监视天空？</h3>
+                <p class="text-gray-300 text-card-body">有些工厂半夜偷偷排污，环保局怎么知道？</p>
+                <p class="text-gray-300 mt-2 text-card-body">天上的卫星、地上的车、空中的无人机，如何织下天罗地网？</p>
+                <div class="mt-6 flex justify-center gap-4 text-4xl">
+                    <span>🛰️</span>
+                    <span>🚁</span>
+                    <span>🚓</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 11: End -->
+        <section data-background-image="https://images.unsplash.com/photo-1519501025264-65ba15a82390?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80">
+            
+            <div class="bg-black bg-opacity-60 p-12 rounded-xl relative z-10">
+                <h1 class="text-white font-bold mb-4">感谢观看</h1>
+                <p class="text-orange-400 text-card-body">未来逐绿 · 辽疆清穹</p>
+                <p class="text-gray-400 mt-8 text-card-body">未来技术学院 辽筑清穹实践团</p>
+            </div>
+        </section>
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.js"></script>
+<script>
+    Reveal.initialize({
+        controls: false,
+        progress: true,
+        center: true,
+        hash: true,
+        transition: 'slide'
+    });
+
+    // ECharts Initialization
+    let myChart = null;
+    function initChart() {
+        const chartDom = document.getElementById('chart-heating');
+        if (chartDom && !myChart) {
+            // Check if visible (Reveal.js hides slides with display: none, so offsetParent is null if hidden)
+            // We can init even if hidden, but size might be wrong. Best to resize or init when shown.
+            // ECharts 5+ handles some of this, but let's be safe.
+            myChart = echarts.init(chartDom, 'dark');
+            const option = {
+                backgroundColor: 'transparent',
+                tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+                grid: { left: '3%', right: '4%', bottom: '3%', containLabel: true },
+                xAxis: { type: 'category', data: ['散煤取暖', '燃煤锅炉', '天然气', '工业余热'], axisLabel: { fontSize: 14 } },
+                yAxis: { type: 'value', name: '碳排放量 (相对值)' },
+                series: [
+                    {
+                        name: '碳排放',
+                        type: 'bar',
+                        barWidth: '50%',
+                        data: [
+                            { value: 100, itemStyle: { color: '#e53e3e' } }, // 散煤
+                            { value: 70, itemStyle: { color: '#ed8936' } },  // 锅炉
+                            { value: 40, itemStyle: { color: '#4299e1' } },  // 气
+                            { value: 5, itemStyle: { color: '#48bb78' } }   // 余热 (极低)
+                        ],
+                        label: { show: true, position: 'top', color: 'white' }
+                    }
+                ]
+            };
+            myChart.setOption(option);
+        } else if (myChart) {
+             myChart.resize();
+        }
+    }
+
+    Reveal.on('ready', initChart);
+    Reveal.on('slidechanged', initChart);
+
+    // Quiz Logic
+    function checkAnswer(element, isCorrect) {
+        const parent = element.parentElement;
+        const feedback = parent.querySelector('.quiz-feedback');
+        
+        // Disable all clicks in this question
+        const options = parent.querySelectorAll('.quiz-option');
+        options.forEach(opt => opt.onclick = null);
+
+        if (isCorrect) {
+            element.classList.add('correct');
+            feedback.innerText = "✅ 回答正确！变废为宝！";
+            feedback.classList.remove('hidden', 'text-red-500');
+            feedback.classList.add('text-green-500');
+        } else {
+            element.classList.add('wrong');
+            feedback.innerText = "❌ 答错了。余热是工厂本来要排掉的废热。";
+            feedback.classList.remove('hidden', 'text-green-500');
+            feedback.classList.add('text-red-500');
+        }
+    }
+
+    // Initialize
+    Reveal.on('ready', () => {
+        initChart();
+    });
+    Reveal.on('slidechanged', () => {
+        initChart();
+    });
+</script>
+
+</body>
+</html>
